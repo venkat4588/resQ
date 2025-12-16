@@ -1,0 +1,141 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin-arm64"]
+}
+
+model User {
+  id                String     @id @default(cuid())
+  name              String?
+  email             String     @unique
+  emailVerified     DateTime?
+  image             String?
+  accounts          Account[]
+  sessions          Session[]
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  verifiedIncidents Incident[] @relation("VerifiedIncidents")
+  resolvedIncidents Incident[] @relation("ResolvedIncidents")
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CCTV {
+  id               String     @id @default(cuid())
+  name             String
+  rtspUrl          String
+  latitude         Float
+  longitude        Float
+  status           String
+  accidentVideoUrl String?
+  hasAccidentVideo Boolean    @default(false)
+  createdAt        DateTime   @default(now())
+  incidents        Incident[]
+
+  @@map("cctvs")
+}
+
+model TrafficAidPost {
+  id               String    @id @default(cuid())
+  name             String
+  address          String
+  latitude         Float
+  longitude        Float
+  contactNumber    String
+  hasPoliceService Boolean   @default(false)
+  hasAmbulance     Boolean   @default(false)
+  hasFireService   Boolean   @default(false)
+  operatingHours   String    @default("24/7")
+  additionalInfo   String?   @db.Text
+  status           String    @default("active")
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@map("traffic_aid_posts")
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum IncidentSeverity {
+  CRITICAL
+  MAJOR
+  MINOR
+}
+
+enum IncidentType {
+  VEHICLE_COLLISION
+  FIRE
+  PEDESTRIAN_ACCIDENT
+  DEBRIS_ON_ROAD
+  STOPPED_VEHICLE
+  WRONG_WAY_DRIVER
+  OTHER
+}
+
+model Incident {
+  id                 String             @id @default(cuid())
+  cctvId             String
+  cctv               CCTV               @relation(fields: [cctvId], references: [id], onDelete: Cascade)
+  detectedAt         DateTime           @default(now())
+  location           String?
+  latitude           Float?
+  longitude          Float?
+  confidenceScore    Float              @default(0)
+  imageUrl           String?
+  thumbnailUrl       String?
+  verificationStatus VerificationStatus @default(PENDING)
+  verifiedAt         DateTime?
+  verifiedBy         String?
+  verifiedByUser     User?              @relation("VerifiedIncidents", fields: [verifiedBy], references: [id])
+  incidentType       IncidentType?
+  severity           IncidentSeverity?
+  notes              String?
+  responseNeeded     Boolean            @default(false)
+  responseInitiated  Boolean            @default(false)
+  resolvedAt         DateTime?
+  resolvedBy         String?
+  resolvedByUser     User?              @relation("ResolvedIncidents", fields: [resolvedBy], references: [id])
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  @@index([cctvId])
+  @@index([verificationStatus])
+  @@map("incidents")
+}

@@ -1,0 +1,30 @@
+{
+  "app/(protected)/cctv_setting/page.tsx -> @/components/MapComponent": {
+    "id": "app/(protected)/cctv_setting/page.tsx -> @/components/MapComponent",
+    "files": [
+      "static/css/_app-pages-browser_components_MapComponent_tsx.css",
+      "static/chunks/_app-pages-browser_components_MapComponent_tsx.js"
+    ]
+  },
+  "components/add-cctv-dialog.tsx -> @/components/MapComponent": {
+    "id": "components/add-cctv-dialog.tsx -> @/components/MapComponent",
+    "files": [
+      "static/css/_app-pages-browser_components_MapComponent_tsx.css",
+      "static/chunks/_app-pages-browser_components_MapComponent_tsx.js"
+    ]
+  },
+  "components/cctv/CCTVEdit.tsx -> @/components/MapComponent": {
+    "id": "components/cctv/CCTVEdit.tsx -> @/components/MapComponent",
+    "files": [
+      "static/css/_app-pages-browser_components_MapComponent_tsx.css",
+      "static/chunks/_app-pages-browser_components_MapComponent_tsx.js"
+    ]
+  },
+  "components/cctv/CCTVviewDetails.tsx -> @/components/MapComponent": {
+    "id": "components/cctv/CCTVviewDetails.tsx -> @/components/MapComponent",
+    "files": [
+      "static/css/_app-pages-browser_components_MapComponent_tsx.css",
+      "static/chunks/_app-pages-browser_components_MapComponent_tsx.js"
+    ]
+  }
+}

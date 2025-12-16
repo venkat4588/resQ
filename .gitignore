@@ -1,0 +1,22 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.env.*
+
+# Uploads / media
+frontend/public/uploads/
+frontend/public/accident_images/
+frontend/videos/
+
+# OS
+.DS_Store
+

@@ -1,0 +1,8 @@
+{
+  "/api/incidents/route": "app/api/incidents/route.js",
+  "/api/cctvs/route": "app/api/cctvs/route.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(protected)/cctv_setting/page": "app/(protected)/cctv_setting/page.js",
+  "/(protected)/page": "app/(protected)/page.js"
+}
