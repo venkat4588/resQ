@@ -58,7 +58,7 @@ Ensure your CUDA version matches your PyTorch build.
 ### 1. 📁 Clone the Repository
 
 ```bash
-git clone https://github.com/mohan-krishna-kotha/resQ.git
+git clone https://github.com/venkat4588/resQ.git
 cd resQ
 ```
 
